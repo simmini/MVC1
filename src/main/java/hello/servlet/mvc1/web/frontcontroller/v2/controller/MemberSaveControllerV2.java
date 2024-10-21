@@ -1,23 +1,21 @@
-package hello.servlet.mvc1.web.servletmvc;
+package hello.servlet.mvc1.web.frontcontroller.v2.controller;
 
 import hello.servlet.mvc1.domain.Member;
 import hello.servlet.mvc1.domain.MemberRepository;
+import hello.servlet.mvc1.web.frontcontroller.MyView;
+import hello.servlet.mvc1.web.frontcontroller.v1.ControllerV1;
+import hello.servlet.mvc1.web.frontcontroller.v2.ControllerV2;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-
-@WebServlet(name="mvcMemberSaveServlet",urlPatterns = "/servlet-mvc/members/save")
-public class MvcMemberSaveServlet extends HttpServlet {
-
+public class MemberSaveControllerV2 implements ControllerV2 {
     private MemberRepository memberRepository= MemberRepository.getInstance();
     @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String username=request.getParameter("username");
         int age=Integer.parseInt(request.getParameter("age"));
@@ -28,8 +26,10 @@ public class MvcMemberSaveServlet extends HttpServlet {
         //Model에 데이터를 보관
         request.setAttribute("member",member);
 
-        String viewPath="/WEB-INF/views/save-result.jsp";
-        RequestDispatcher dispatcher=request.getRequestDispatcher(viewPath);
-        dispatcher.forward(request,response);
+//        String viewPath="/WEB-INF/views/save-result.jsp";
+//        RequestDispatcher dispatcher=request.getRequestDispatcher(viewPath);
+//        dispatcher.forward(request,response);
+
+        return  new MyView("/WEB-INF/views/save-result.jsp");
     }
 }
